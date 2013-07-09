@@ -12,7 +12,68 @@ npm install simplemule
 
 ## Usage
 
-TBD
+Reference in your program:
+
+```javascript
+var sm = require('simplemule');
+```
+
+You can define components and connect them. A component needs a function that receives a `context` and a `message`.
+```javascript
+var component = sm.createComponent(function (context, message) {
+    console.log(message);
+});
+```
+
+You can send a message to a component:
+```javascript
+component.send("Hello, world");
+```
+It is processed immediatly.
+
+You can post a message to a component:
+```javascript
+component.post("Hello, world");
+```
+It is processed after attending any pending callbacks in Node.js. Internally, it use `setImmediate`.
+
+But in general, you don't send message directly to a component. Usually, you connect them:
+```javascript
+var hello = sm.createComponent(function (context, message) {
+    context.send('next', "Hello, " + message);
+    // context.post('next', "Hello, " + message);
+});
+
+hello.connect('next', component);
+hello.send("world");
+// hello.post("world");
+```
+`context.send` or `context.post` first parameter is the name of the channel, and the second parameter is the message.
+`component.connect` first parameter is the name of the output channel, and the second parameter is the component
+that listen on that channel.
+
+You can use the default channel, ommitting the name:
+```javascript
+var hello = sm.createComponent(function (context, message) {
+    context.send("Hello, " + message);
+    // context.post("Hello, " + message);
+});
+
+hello.connect(component);
+hello.send("world");
+// hello.post("world");
+```
+
+You can connect more than one component to the same output channel:
+```javascript
+component.connect('next', component1);
+component.connect('next', component2);
+```
+or to the default channel:
+```javascript
+component.connect(component1);
+component.connect(component2);
+```
 
 ## Development
 
