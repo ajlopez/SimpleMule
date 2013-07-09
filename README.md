@@ -75,6 +75,14 @@ component.connect(component1);
 component.connect(component2);
 ```
 
+Usually, after building the topology of components, you start the play sending one or more message to one or more
+starter components:
+```javascript
+starter.send(null);
+queuereader.send('queuename');
+listener.send(options);
+```
+
 ## Development
 
 ```
