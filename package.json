@@ -1,7 +1,7 @@
 { "name": "simplemule"
-, "description": "Run simplemule plugins"
-, "keywords": [ "plugin", "run", "engine" ]
-, "version": "0.0.1alpha"
+, "description": "Mule-like components processing arbitrary messages"
+, "keywords": [ "mule", "esb", "messaging", "message", "component", "bus" ]
+, "version": "0.0.1"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/SimpleMule.git" }
 , "main": "./lib/simplemule.js"

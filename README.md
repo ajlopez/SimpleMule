@@ -96,6 +96,10 @@ npm test
 
 TBD
 
+## Versions
+
+- 0.0.1: Published
+
 ## Inception
 
 Years ago (+- 8 years) I gave a talk about ESB (Enterprise Service Bus) demoing Mule:
