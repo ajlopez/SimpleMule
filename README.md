@@ -117,6 +117,19 @@ Related projects:
 - [SimpleStorm](https://github.com/ajlopez/SimpleStorm)
 - [SimpleBus](https://github.com/ajlopez/SimpleBus)
 
+## References
+
+The project is simpler than original Mule, and it is a proof that messaging can be implemented in a clear way.
+Some additional concepts from Mule:
+
+- [Mule Examples](http://www.mulesoft.org/documentation/display/current/Mule+Examples)
+- [Mule Concepts](http://www.mulesoft.org/documentation/display/current/Mule+Concepts)
+- [Elements in a Mule Flow](http://www.mulesoft.org/documentation/display/current/Elements+in+a+Mule+Flow)
+- [Mule Endpoints and Connectors](http://www.mulesoft.org/documentation/display/current/Mule+Endpoints+and+Connectors)
+- [Mule Message Structure](http://www.mulesoft.org/documentation/display/current/Mule+Message+Structure)
+
+Curiously, it is not easy to find a code example in those pages (that is, a fragment of code).
+
 ## Contribution
 
 Feel free to [file issues](https://github.com/ajlopez/SimpleMule) and submit
