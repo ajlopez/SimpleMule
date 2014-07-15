@@ -2,7 +2,7 @@
 var sm = require('..');
 
 exports['Post message'] = function (test) {
-    test.expect(4);
+    test.async();
     
     var component = sm.createComponent(function (context, message) {
         test.ok(context);

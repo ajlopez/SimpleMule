@@ -36,7 +36,7 @@ exports['Connect two components using default channel'] = function (test) {
 }
 
 exports['Connect two components using post'] = function (test) {
-    test.expect(3);
+    test.async();
     
     var increment = sm.createComponent(function (context, message) {
         context.post('next', message + 1);
@@ -88,7 +88,7 @@ exports['Connect one component to two components'] = function (test) {
 }
 
 exports['Connect one component to two components using post'] = function (test) {
-    test.expect(6);
+    test.async(6);
 
     var increment = sm.createComponent(function (context, message) {
         context.post('next', message + 1);

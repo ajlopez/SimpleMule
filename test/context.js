@@ -19,7 +19,7 @@ exports['Context send using default channel'] = function (test) {
 }
 
 exports['Context post using default channel'] = function (test) {
-    test.expect(3);
+    test.async();
     
     var increment = sm.createComponent(function (context, message) {
         context.post(message + 1);
