@@ -24,3 +24,17 @@ exports['send to flow with transform'] = function (test) {
     test.done();
 }
 
+exports['send to flow with process'] = function (test) {
+    var flow = sm.flow();
+    var total = 0;
+    
+    flow.process(function (payload) { total += payload; });
+
+    test.equal(0, total);
+    test.equal(1, flow.send(1));
+    test.equal(1, total);
+    test.equal(2, flow.send(2));
+    test.equal(3, total);
+
+    test.done();
+}
