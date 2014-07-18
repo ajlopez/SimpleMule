@@ -38,3 +38,19 @@ exports['send to flow with process'] = function (test) {
 
     test.done();
 }
+
+exports['post to flow with transform and output'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow();
+    
+    flow.transform(function (payload) { return payload + 1; })
+        .transform(function (payload) { return payload * 2; })
+        .output(function (payload) { 
+            test.ok(payload);
+            test.equal(payload, 4);
+            test.done();
+        });
+        
+    flow.post(1);
+}
