@@ -16,6 +16,19 @@ exports['simple send'] = function (test) {
     test.done();
 }
 
+exports['simple send with callback'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow();
+
+    flow.send(1, function (err, result) {
+        test.ok(!err);
+        test.ok(result);
+        test.equal(result, 1);
+        test.done();
+    });
+}
+
 exports['send to flow with transform'] = function (test) {
     var flow = sm.flow();
     flow.transform(function (payload) { return payload + 1; });
