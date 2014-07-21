@@ -67,3 +67,19 @@ exports['post to flow with transform and output'] = function (test) {
         
     flow.post(1);
 }
+
+exports['input and start'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow();
+    
+    flow.input(function (flow) { flow.post(1); })
+        .transform(function (payload) { return payload + 2; })
+        .output(function (payload) { 
+            test.ok(payload);
+            test.equal(payload, 3);
+            test.done();
+        });
+        
+    flow.start();
+}
