@@ -83,3 +83,62 @@ exports['input and start'] = function (test) {
         
     flow.start();
 }
+
+exports['input with two payloads and start'] = function (test) {
+    test.async();
+    var firsttime = true;
+    
+    var flow = sm.flow();
+    
+    flow.input(function (flow) { flow.post(1); flow.post(2); })
+        .transform(function (payload) { return payload + 2; })
+        .output(function (payload) { 
+            test.ok(payload);
+            
+            if (firsttime) {
+                test.equal(payload, 3);
+                firsttime = false;
+                return;
+            }
+            
+            test.equal(payload, 4);
+            test.done();
+        });
+        
+    flow.start();
+}
+
+exports['two inputs and start'] = function (test) {
+    test.async();
+    var firsttime = true;
+    
+    var flow = sm.flow();
+    
+    flow.input(function (flow) { flow.post(1); })
+        .input(function (flow) { flow.post(2); })
+        .transform(function (payload) { return payload + 2; })
+        .output(function (payload) { 
+            test.ok(payload);
+            
+            if (firsttime) {
+                test.equal(payload, 3);
+                firsttime = false;
+                return;
+            }
+            
+            test.equal(payload, 4);
+            test.done();
+        });
+        
+    flow.start();
+}
+
+exports['empty branch'] = function (test) {
+    var flow = sm.flow();
+
+    flow.branch("branch")
+        .end();
+        
+    test.equal(1, flow.send(1));
+    test.done();
+}
