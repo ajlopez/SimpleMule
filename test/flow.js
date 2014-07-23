@@ -142,3 +142,14 @@ exports['empty branch'] = function (test) {
     test.equal(1, flow.send(1));
     test.done();
 }
+
+exports['branch with one step'] = function (test) {
+    var flow = sm.flow();
+
+    flow.branch("branch")
+        .transform(function (payload) { return payload + 1; })
+        .end();
+        
+    test.equal(2, flow.send(1));
+    test.done();
+}
