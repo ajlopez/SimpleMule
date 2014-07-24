@@ -139,17 +139,34 @@ exports['empty branch'] = function (test) {
     flow.branch("branch")
         .end();
         
-    test.equal(1, flow.send(1));
+    test.equal(flow.send(1), 1);
     test.done();
 }
 
 exports['branch with one step'] = function (test) {
     var flow = sm.flow();
 
-    flow.branch("branch")
+    flow.route(function () { return "branch"; })
+        .branch("branch")
         .transform(function (payload) { return payload + 1; })
         .end();
         
-    test.equal(2, flow.send(1));
+    test.equal(flow.send(1), 2);
+    test.done();
+}
+
+exports['route and branches'] = function (test) {
+    var flow = sm.flow();
+
+    flow.route(function (payload) { if (payload % 2) return "odd"; return "even"; })
+        .branch("odd")
+        .transform(function (payload) { return payload * 2; })
+        .end()
+        .branch("even")
+        .transform(function (payload) { return payload + 1; })
+        .end();
+        
+    test.equal(flow.send(3), 6);
+    test.equal(flow.send(2), 3);
     test.done();
 }
