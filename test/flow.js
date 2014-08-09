@@ -6,6 +6,7 @@ exports['create flow'] = function (test) {
     
     test.ok(flow);
     test.equal(typeof flow, 'object');
+    test.equal(flow.isAsync(), false);
     test.done();
 }
 
@@ -25,6 +26,23 @@ exports['simple send with callback'] = function (test) {
         test.ok(!err);
         test.ok(result);
         test.equal(result, 1);
+        test.done();
+    });
+}
+
+exports['async transformad and send with callback'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow().transform(function (payload, cb) {
+        cb(null, payload + 1);
+    });
+    
+    test.ok(flow.isAsync());
+
+    flow.send(1, function (err, result) {
+        test.ok(!err);
+        test.ok(result);
+        test.equal(result, 2);
         test.done();
     });
 }
