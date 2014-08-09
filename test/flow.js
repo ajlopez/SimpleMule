@@ -30,7 +30,7 @@ exports['simple send with callback'] = function (test) {
     });
 }
 
-exports['async transformad and send with callback'] = function (test) {
+exports['async transform and send with callback'] = function (test) {
     test.async();
     
     var flow = sm.flow().transform(function (payload, cb) {
@@ -45,6 +45,21 @@ exports['async transformad and send with callback'] = function (test) {
         test.equal(result, 2);
         test.done();
     });
+}
+exports['async transform and post'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow().transform(function (payload, cb) {
+        cb(null, payload + 1);
+    }).output(function (payload) {
+        test.ok(payload);
+        test.equal(payload, 2);
+        test.done();
+    });
+    
+    test.ok(flow.isAsync());
+
+    flow.post(1);
 }
 
 exports['send to flow with transform'] = function (test) {
