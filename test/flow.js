@@ -203,3 +203,30 @@ exports['route and branches'] = function (test) {
     test.equal(flow.send(2), 3);
     test.done();
 }
+
+exports['route and async branches'] = function (test) {
+    test.async();
+    
+    var flow = sm.flow();
+
+    flow.route(function (payload) { if (payload % 2) return "odd"; return "even"; })
+        .branch("odd")
+        .transform(function (payload, cb) { cb(null, payload * 2); })
+        .end()
+        .branch("even")
+        .transform(function (payload, cb) { cb(null, payload + 1); })
+        .end();
+    
+    flow.send(3, function (err, value) {
+        test.ok(!err);
+        test.ok(value);
+        test.equal(value, 6);
+        
+        flow.send(2, function (err, value) {
+            test.ok(!err);
+            test.ok(value);
+            test.equal(value, 3);
+            test.done();
+        });
+    });
+}
