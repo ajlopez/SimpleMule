@@ -9,10 +9,14 @@ var hostname;
 var match1 = /href=\s*"([^&"]*)"/ig;
 var match2= /href=\s*'([^&']*)'/ig;
 
+var urlsite;
+
 var flow = sm.flow()
     .transform(function (link, next) {
         var urldata = url.parse(link);
         
+        if (!urlsite)
+            urlsite = link;
         if (!hostname)
             hostname = urldata.hostname;
         
@@ -42,12 +46,12 @@ var flow = sm.flow()
                     next(null, result);
                 });
            }).on('error', function(e) {
-                console.log('Url: ' + link);
-                console.log('Error: ' + e.message);
+                console.log('Url:', link, 'Error:', e.message);
                 next(e, null);
             });
     })
     .output(function (data, next) {
+        console.log('analyzing');
         var links;
 
         while ((links = match1.exec(data)) !== null) {
@@ -58,6 +62,8 @@ var flow = sm.flow()
                 
             if (link.indexOf('http:') == 0)
                 flow.post(link);
+            else if (link[0] == '/')
+                flow.post(urlsite + link);
         };
 
         while ((links = match2.exec(data)) !== null) {
@@ -68,6 +74,8 @@ var flow = sm.flow()
                 
             if (link.indexOf('http:') == 0)
                 flow.post(link);
+            else if (link[0] == '/')
+                flow.post(urlsite + link);
         };
     })
 
